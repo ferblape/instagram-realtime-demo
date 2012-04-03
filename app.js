@@ -18,12 +18,6 @@ app.get('/style.css', function(request, response){
     response.end();
 });
 
-app.get('/socket.io.js', function(request, response){
-    response.writeHead(200, {'Content-Type': 'text/javascript'});
-    response.write(fs.readFileSync(__dirname + '/public/javascripts/socket.io.js', 'utf8'));
-    response.end();
-});
-
 app.get('/', function(request, response){
   fs.readFile('./index.html', function(error, content) {
     if (error) {
