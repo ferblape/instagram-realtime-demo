@@ -1,7 +1,6 @@
 var https = require("https"),
     util = require('util'),
-    querystring = require('querystring'),
-
+    querystring = require('querystring');
 
 var Client = function(client_id, io){
   this.client_id = client_id;
