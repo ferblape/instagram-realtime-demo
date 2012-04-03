@@ -54,6 +54,7 @@ app.post('/callback', function(request, response){
       });
       res.on('end', function () {
         var response = JSON.parse(raw);
+        console.log(response);
         if(response['meta']['code'] == 200) {
           var photo = response['data'];
           if(photo.location != null){
