@@ -1,4 +1,5 @@
-var express = require('express');
+var express = require('express'),
+    util = require('util');
 
 var port = process.env.PORT || 3000;
 
@@ -12,8 +13,12 @@ app.get('/callback', function(request, response){
   if(request.param("hub.challenge") != null){
     response.send(request.param("hub.challenge"));
   } else {
-    console.log(JSON.parse(response.body));
+    console.log("ERROR on suscription request: %s", util.inspect(request));
   }
+});
+
+app.post('/callback', function(request, response){
+  console.log(JSON.parse(response.body));
 });
 
 app.listen(port, function(){
