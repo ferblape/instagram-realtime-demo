@@ -13,22 +13,31 @@
   <link type="text/css" rel="stylesheet" href="style.css" />
 
   <script type="text/javascript">
-
-    // var host = 'http://localhost';
-    var host = 'http://instagram-realtime-demo.herokuapp.com';
-
-    var socket = io.connect(host);
-    socket.on('photo', function (data) {
-      var photo = JSON.parse(data)['data'];
-      $('.item_data img').attr('src', photo.user.profile_picture);
-      $('.item_data p strong').html(photo.user.username);
-      $('.item_data span.date').html(photo.created_time);
-      $('.item_data a').attr('href', photo.link);
-      $('.content.instagram').html('<img src="' + photo.images.low_resolution.url + '" />');
-      $('#content').show();
-    });
-
     $(function() {
+
+
+      // var host = 'http://localhost';
+      var host = 'http://instagram-realtime-demo.herokuapp.com';
+
+      var photos = [], marker;
+
+      var socket = io.connect(host);
+      socket.on('photo', function (data) {
+        var photo = JSON.parse(data)['data'];
+        photos.push(photo);
+        loadInfoWindow(photo);
+        });
+
+      function loadInfoWindow(photo, marker){
+        $('.item_data img').attr('src', photo.user.profile_picture);
+        $('.item_data p strong').html(photo.user.username);
+        $('.item_data span.date').html(photo.created_time);
+        $('.item_data a').attr('href', photo.link);
+        $('.content.instagram').html('<img src="' + photo.images.low_resolution.url + '" />');
+        $('#content').show();
+        var position = new google.maps.LatLng(photo.location.latitude, photo.location.longitude);
+        new google.maps.Marker({ position:position,map:map,draggable:false});
+      }
 
       var mapOptions = {
         zoom: 16,
@@ -55,12 +64,11 @@
       <img src="" alt="" class="avatar">
       <p>
         <strong></strong><br>
-        <span class="date"></span> · <a href="#" target="blank"></a>
+        <span class="date"></span> · <a href="#" target="blank">instagram</a>
       </p>
     </div>
   </div>
   <div class="instagram content"></div>
-  <input type="hidden" id="current_feature">
 </div>
 
 <div id="outer_map_container">
