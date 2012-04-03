@@ -2,10 +2,13 @@ var express = require('express'),
     util = require('util'),
     fs = require('fs'),
     app = express.createServer(),
+    io = require('socket.io').listen(app),
     instagram = require('./src/instagram_client.js');
 
+io.set('log level', 1);
+
 var port = (process.env.PORT || 3000),
-    instagramClient = new instagram.Client(process.env.instagram_client_id);
+    instagramClient = new instagram.Client(process.env.instagram_client_id, io);
 
 app.use(express.bodyParser());
 

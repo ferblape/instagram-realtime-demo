@@ -1,12 +1,11 @@
 var https = require("https"),
     util = require('util'),
     querystring = require('querystring'),
-    io = require('socket.io').listen(process.env.PORT || 8888);
 
-io.set('log level', 1);
 
-var Client = function(client_id){
+var Client = function(client_id, io){
   this.client_id = client_id;
+  this.io = io;
 }
 
 Client.prototype = {
@@ -29,7 +28,7 @@ Client.prototype = {
             var photo = response['data'];
             // if(photo.location != null){
               console.log(util.inspect(photo));
-              io.sockets.emit('photo', raw);
+              this.io.sockets.emit('photo', raw);
             // }
           } else {
             console.log("ERROR: %s", util.inspect(response['meta']));

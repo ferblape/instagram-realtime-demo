@@ -14,7 +14,8 @@
 
   <script type="text/javascript">
 
-    var host = (process.env.NODE_ENV == 'production' ? 'http://instagram-realtime-demo.herokuapp.com' : 'http://localhost';
+    // var host = 'http://localhost';
+    var host = 'http://instagram-realtime-demo.herokuapp.com';
 
     var socket = io.connect(host);
     socket.on('photo', function (data) {
