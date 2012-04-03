@@ -55,10 +55,9 @@ app.post('/callback', function(request, response){
         var response = JSON.parse(raw);
         if(response['meta']['code'] == 200) {
           var photo = response['data'];
-          // if(photo.location != null){
-          console.log(util.inspect(photo));
-          io.sockets.emit('photo', raw);
-          // }
+          if(photo.location != null){
+            io.sockets.emit('photo', raw);
+          }
         } else {
           console.log("ERROR: %s", util.inspect(response['meta']));
         }

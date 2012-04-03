@@ -19,7 +19,13 @@
 
     var socket = io.connect(host);
     socket.on('photo', function (data) {
-      console.log(data);
+      var photo = JSON.parse(data)['data'];
+      $('.item_data img').attr('src', photo.user.profile_picture);
+      $('.item_data p strong').html(photo.user.username);
+      $('.item_data span.date').html(photo.created_time);
+      $('.item_data a').attr('href', photo.link);
+      $('.content.instagram').html('<img src="' + photo.images.low_resolution.url + '" />');
+      $('#content').show();
     });
 
     $(function() {
@@ -53,7 +59,7 @@
       </p>
     </div>
   </div>
-  <div class="content"></div>
+  <div class="instagram content"></div>
   <input type="hidden" id="current_feature">
 </div>
 
