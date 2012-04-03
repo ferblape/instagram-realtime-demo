@@ -7,15 +7,10 @@
   "licenses": [{ "type": "BSD" }],
   "dependencies": {
     "express": ">= 2.5.x",
-    "zombie":  ">= 0.12.x",
-    "jessie":  ">= 0.3.x",
     "socket.io": ">= 0.9.x"
   },
   "engines": {
     "node": "0.6.6",
     "npm": "1.0.106"
-  },
-  "scripts": {
-    "test": "./node_modules/jessie/bin/jessie  spec/"
   }
 }

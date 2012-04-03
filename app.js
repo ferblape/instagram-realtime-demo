@@ -41,13 +41,11 @@ app.get('/callback', function(request, response){
 
 app.post('/callback', function(request, response){
   // request.body is a JSON already parsed
-  var that = this;
-
   request.body.forEach(function(obj){
     https.get({
       host: 'api.instagram.com',
       path: '/v1/media/' + obj.object_id +
-      '?' + querystring.stringify({client_id: that.client_id}),
+      '?' + querystring.stringify({client_id: process.env.instagram_client_id}),
     }, function(res){
       var raw = "";
       res.on('data', function (chunk) {
