@@ -1,0 +1,20 @@
+{
+  "name"    : "instagram-realtime-demo",
+  "author"  : "Fernando Blat <ferblape@gmail.com>",
+  "version" : "0.1.0",
+  "description": "Node.js proof of concept of Instagram Realtime API",
+  "main": "./app.js",
+  "licenses": [{ "type": "BSD" }],
+  "dependencies": {
+    "express": ">= 2.5.x",
+    "zombie":  ">= 0.12.x",
+    "jessie":  ">= 0.3.x"
+  },
+  "engines": {
+    "node": "0.6.6",
+    "npm": "1.0.106"
+  },
+  "scripts": {
+    "test": "./node_modules/jessie/bin/jessie  spec/"
+  }
+}
