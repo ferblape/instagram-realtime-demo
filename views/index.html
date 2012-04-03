@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <title>Instagram Realtime Demo</title>
+  <base href="public/" />
+  <link href="style.css" media="screen" rel="stylesheet" type="text/css">
+  <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
+  <script type="text/javascript">
+    $(function() {
+
+      var mapOptions = {
+        zoom: 2,
+        center: new google.maps.LatLng(-34.6088145323559,-58.3762291354736),
+        disableDefaultUI: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
+      // Init the map
+      var map = new google.maps.Map(document.getElementById("map_container"), mapOptions);
+
+      map.setOptions({mapTypeId: google.maps.MapTypeId.ROADMAP});
+      map_style = {};
+      map_style.google_maps_customization_style = [ { stylers: [ { saturation: -65 }, { gamma: 1.52 } ] }, { featureType: "administrative", stylers: [ { saturation: -95 },{ gamma: 2.26 } ] }, { featureType: "water", elementType: "labels", stylers: [ { visibility: "off" } ] }, { featureType: "administrative.locality", stylers: [ { visibility: 'off' } ] }, { featureType: "road", stylers: [ { visibility: "simplified" }, { saturation: -99 }, { gamma: 2.22 } ] }, { featureType: "poi", elementType: "labels", stylers: [ { visibility: "off" } ] }, { featureType: "road.arterial", stylers: [ { visibility: 'off' } ] }, { featureType: "road.local", elementType: "labels", stylers: [ { visibility: 'off' } ] }, { featureType: "transit", stylers: [ { visibility: 'off' } ] }, { featureType: "road", elementType: "labels", stylers: [ { visibility: 'off' } ] },{ featureType: "poi", stylers: [ { saturation: -55 } ] } ];
+
+      // Zoom bindings
+      $('a.map_embed_zoom_in').click(function(ev){
+        ev.preventDefault();
+        map.setZoom(map.getZoom()+1);
+      });
+      $('a.map_embed_zoom_out').click(function(ev){
+        ev.preventDefault();
+        map.setZoom(map.getZoom()-1);
+      });
+    });
+  </script>
+</head>
+<body>
+
+<header id="top_bar">
+  <h1>Demo map™</h1>
+</header>
+
+<div class="popover" id="content" style="display:none">
+  <div class="header">
+    <div class="item_data">
+      <img src="" alt="" class="avatar">
+      <p>
+        <strong></strong><br>
+        <span class="date"></span> · <a href="#" target="blank"></a>
+      </p>
+    </div>
+  </div>
+  <div class="content"></div>
+  <input type="hidden" id="current_feature">
+</div>
+
+<div id="outer_map_cartodb_container">
+  <div id="map_container"></div>
+</div>
+
+<span class="cartodb_map_controls">
+  <a href="#zoom_in" class="map_embed_zoom_in">+</a>
+  <a href="#zoom_out" class="map_embed_zoom_out">-</a>
+</span>
+
+</body></html>

@@ -8,7 +8,8 @@
   "dependencies": {
     "express": ">= 2.5.x",
     "zombie":  ">= 0.12.x",
-    "jessie":  ">= 0.3.x"
+    "jessie":  ">= 0.3.x",
+    "socket.io": ">= 0.9.x"
   },
   "engines": {
     "node": "0.6.6",
