@@ -42,6 +42,7 @@ app.get('/callback', function(request, response){
 app.post('/callback', function(request, response){
   // request.body is a JSON already parsed
   request.body.forEach(function(obj){
+    console.log(util.inspect(obj));
     https.get({
       host: 'api.instagram.com',
       path: '/v1/media/' + obj.object_id +
