@@ -22,8 +22,8 @@
       var photos = [], marker;
 
       var socket = io.connect(host);
-      socket.on('photo', function (data) {
-        var photo = JSON.parse(data)[0]['data'];
+      socket.on('photo', function (raw) {
+        var photo = JSON.parse(raw)['data'][0];
         photos.push(photo);
         loadInfoWindow(photo);
         });
