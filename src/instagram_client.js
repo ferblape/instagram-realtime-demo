@@ -1,7 +1,7 @@
 var https = require("https"),
     util = require('util'),
     querystring = require('querystring'),
-    io = require('socket.io').listen(8888);
+    io = require('socket.io').listen(process.env.PORT || 8888);
 
 io.set('log level', 1);
 
