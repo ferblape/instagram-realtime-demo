@@ -1,10 +1,6 @@
 var express = require('express');
 
-var config = {
-  port: function() {
-    return (process.env.NODE_ENV== 'production') ? 80 : 3000;
-  }
-};
+var port = process.env.PORT || 3000;
 
 var app = express.createServer();
 
@@ -20,7 +16,7 @@ app.get('/callback', function(request, response){
   }
 });
 
-app.listen(config.port(), function(){
-  console.log("Listening in port %d", config.port());
+app.listen(port, function(){
+  console.log("Listening in port %d", port);
 });
 
