@@ -3,12 +3,11 @@ var express = require('express'),
     fs = require('fs'),
     app = express.createServer(),
     io = require('socket.io').listen(app),
-    instagram = require('./src/instagram_client.js');
+    querystring = require('querystring');
 
 io.set('log level', 1);
 
-var port = (process.env.PORT || 3000),
-    instagramClient = new instagram.Client(process.env.instagram_client_id, io);
+var port = (process.env.PORT || 3000);
 
 app.use(express.bodyParser());
 
@@ -41,7 +40,32 @@ app.get('/callback', function(request, response){
 
 app.post('/callback', function(request, response){
   // request.body is a JSON already parsed
-  instagramClient.searchAndPublish(request.body);
+  var that = this;
+
+  request.body.forEach(function(obj){
+    https.get({
+      host: 'api.instagram.com',
+      path: '/v1/media/' + obj.object_id +
+      '?' + querystring.stringify({client_id: that.client_id}),
+    }, function(res){
+      var raw = "";
+      res.on('data', function (chunk) {
+        raw += chunk;
+      });
+      res.on('end', function () {
+        var response = JSON.parse(raw);
+        if(response['meta']['code'] == 200) {
+          var photo = response['data'];
+          // if(photo.location != null){
+          console.log(util.inspect(photo));
+          io.sockets.emit('photo', raw);
+          // }
+        } else {
+          console.log("ERROR: %s", util.inspect(response['meta']));
+        }
+      });
+    });
+  });
   response.writeHead(200);
 });
 
