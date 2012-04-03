@@ -5,6 +5,8 @@ var port = process.env.PORT || 3000;
 
 var app = express.createServer();
 
+app.use(express.bodyParser());
+
 app.get('/', function(req, res){
     res.send('Hello World');
 });
@@ -18,8 +20,7 @@ app.get('/callback', function(request, response){
 });
 
 app.post('/callback', function(request, response){
-  console.log(util.inspect(request.body));
-  console.log(JSON.parse(request.body));
+  console.log(request.body);
 });
 
 app.listen(port, function(){
