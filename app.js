@@ -18,7 +18,7 @@ app.get('/callback', function(request, response){
 });
 
 app.post('/callback', function(request, response){
-  console.log(JSON.parse(response.body));
+  console.log(util.inspect(response.body));
 });
 
 app.listen(port, function(){
