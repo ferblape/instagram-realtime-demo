@@ -37,6 +37,7 @@
         $('#content').show();
         var position = new google.maps.LatLng(photo.location.latitude, photo.location.longitude);
         new google.maps.Marker({ position:position,map:map,draggable:false});
+        map.setCenter(position);
       }
 
       var mapOptions = {
