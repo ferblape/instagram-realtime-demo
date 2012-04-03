@@ -3,6 +3,7 @@ var express = require('express'),
     fs = require('fs'),
     app = express.createServer(),
     io = require('socket.io').listen(app),
+    https = require("https"),
     querystring = require('querystring');
 
 io.set('log level', 1);
