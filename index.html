@@ -23,7 +23,7 @@
 
       var socket = io.connect(host);
       socket.on('photo', function (data) {
-        var photo = JSON.parse(data)['data'];
+        var photo = JSON.parse(data)[0]['data'];
         photos.push(photo);
         loadInfoWindow(photo);
         });
