@@ -1,3 +1,6 @@
+// IMPORTANT: in order to run these specs the application must be
+//            running in http://localhost:3000
+
 var Browser = require("zombie");
 
 describe("Validate callback URL", function() {
@@ -10,4 +13,11 @@ describe("Validate callback URL", function() {
       expect(browser.text("body")).toEqual("15f7d1a91c1f40f8a748fd134752feb3");
     });
   });
+});
+
+describe("POST notifications to callback URL", function() {
+  it("should call instagram client", function() {
+
+  });
+
 });

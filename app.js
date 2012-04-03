@@ -1,5 +1,6 @@
 var express = require('express'),
     util = require('util'),
+    fs = require('fs'),
     app = express.createServer(),
     instagram = require('./src/instagram_client.js');
 
@@ -8,14 +9,28 @@ var port = (process.env.PORT || 3000),
 
 app.use(express.bodyParser());
 
+app.get('/style.css', function(request, response){
+    response.writeHead(200, {'Content-Type': 'text/css'});
+    response.write(fs.readFileSync(__dirname + '/public/stylesheets/style.css', 'utf8'));
+    response.end();
+});
+
+app.get('/socket.io.js', function(request, response){
+    response.writeHead(200, {'Content-Type': 'text/javascript'});
+    response.write(fs.readFileSync(__dirname + '/public/javascripts/socket.io.js', 'utf8'));
+    response.end();
+});
+
 app.get('/', function(request, response){
-  response.sendfile(__dirname + '/views/index.html', function(err, data){
-    if(err) {
-      res.writeHead(500);
-      return res.end('Error loading index.html');
+  fs.readFile('./index.html', function(error, content) {
+    if (error) {
+      response.writeHead(500);
+      response.end();
     }
-    response.writeHead(200);
-    response.end(data);
+    else {
+      response.writeHead(200, { 'Content-Type': 'text/html' });
+      response.end(content, 'utf-8');
+    }
   });
 });
 

@@ -3,6 +3,8 @@ var https = require("https"),
     querystring = require('querystring'),
     io = require('socket.io').listen(8888);
 
+io.set('log level', 1);
+
 var Client = function(client_id){
   this.client_id = client_id;
 }
