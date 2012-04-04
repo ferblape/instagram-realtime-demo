@@ -15,45 +15,52 @@
   <script type="text/javascript">
     $(function() {
 
-
       // var host = 'http://localhost';
-      var host = 'http://instagram-realtime-demo.herokuapp.com';
+      var host = 'http://instagram-realtime-demo.herokuapp.com',
+          photos = [],
+          socket = io.connect(host);
 
-      var photos = [], marker;
-
-      var socket = io.connect(host);
       socket.on('photo', function (raw) {
         var photo = JSON.parse(raw)['data'][0];
-        photos.push(photo);
-        loadInfoWindow(photo,true);
-        });
+        photos.push(photo.link);
+        loadInfoWindow(photo);
+        setupMarker(photo);
+        $('h1 span').html(photos.length + ' ' + (photos.length == 1 ? 'photo' : 'photos'));
+      });
 
-      function loadInfoWindow(photo, createMarker){
+      function setupMarker(photo){
+        var position = new google.maps.LatLng(photo.location.latitude, photo.location.longitude);
+        map.setCenter(position);
+        var marker = new google.maps.Marker({ position:position,map:map,animation:google.maps.Animation.DROP,html:photo});
+        google.maps.event.addListener(marker, "click", function () {
+          loadInfoWindow(this.html);
+        });
+      }
+
+      function loadInfoWindow(photo){
         $('.item_data img').attr('src', photo.user.profile_picture);
         $('.item_data p strong').html(photo.user.username);
         $('.item_data span.date').html(photo.created_time);
         $('.item_data a').attr('href', photo.link);
         $('.content.instagram').html('<img src="' + photo.images.low_resolution.url + '" />');
         $('#content').show();
-        if(createMarker){
-          var position = new google.maps.LatLng(photo.location.latitude, photo.location.longitude);
-          map.setCenter(position);
-          var marker = new google.maps.Marker({ position:position,map:map,animation:google.maps.Animation.DROP,html:photo});
-          google.maps.event.addListener(marker, "click", function () {
-            loadInfoWindow(this.html, false);    
-          });
-        }
       }
 
       var mapOptions = {
-        zoom: 16,
+        zoom: 15,
         center: new google.maps.LatLng(40.4166909, -3.70034540000006),
         disableDefaultUI: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        styles: [ { stylers: [ { saturation: -65 }, { gamma: 1.52 } ] }, { featureType: "administrative", stylers: [ { saturation: -95 },{ gamma: 2.26 } ] }, { featureType: "water", elementType: "labels", stylers: [ { visibility: "off" } ] }, { featureType: "administrative.locality", stylers: [ { visibility: 'off' } ] }, { featureType: "road", stylers: [ { visibility: "simplified" }, { saturation: -99 }, { gamma: 2.22 } ] }, { featureType: "poi", elementType: "labels", stylers: [ { visibility: "off" } ] }, { featureType: "road.arterial", stylers: [ { visibility: 'off' } ] }, { featureType: "road.local", elementType: "labels", stylers: [ { visibility: 'off' } ] }, { featureType: "transit", stylers: [ { visibility: 'off' } ] }, { featureType: "road", elementType: "labels", stylers: [ { visibility: 'off' } ] },{ featureType: "poi", stylers: [ { saturation: -55 } ] } ]
+        styles: [
+          { stylers: [ { saturation: -65 }, { gamma: 1.52 } ] },
+          { featureType: "administrative", stylers: [ { saturation: -95 },{ gamma: 2.26 } ] },
+          { featureType: "water", elementType: "labels", stylers: [ { visibility: "off" } ] },
+          // Remove road names
+          { featureType: "road", stylers: [ { visibility: "simplified" }, { saturation: -99 }, { gamma: 2.22 } ] },
+          { featureType: "poi", elementType: "labels", stylers: [ { visibility: "off" },{ saturation: -55 } ] }
+        ]
       };
 
-      // Init the map
       var map = new google.maps.Map(document.getElementById("map_container"), mapOptions);
     });
   </script>
@@ -61,7 +68,7 @@
 <body>
 
 <header id="top_bar">
-  <h1>Demo map™</h1>
+  <h1>Madrid instagram activity <span></span></h1>
 </header>
 
 <div class="popover" id="content" style="display:none">
