@@ -18,3 +18,4 @@ To see the project on-line visit this URL: (http://instagram-realtime-demo.herok
 
 - [@denegro](http://denegro.com) for the HTML and the CSS
 - [@cartodb](http://cartodb.com) for the styling of the map
+- [@heroku](http://heroku.com) for hosting the application and making the deploy in such a trivial thing
