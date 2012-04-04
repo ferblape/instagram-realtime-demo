@@ -38,9 +38,12 @@
       }
 
       function loadInfoWindow(photo){
+        var date = new Date(parseInt(photo.created_time)*1000),
+            formatedDate = date.getFullYear() + '-' + parseInt(date.getMonth()+1) + '-' + date.getDate() +
+                           ' ' + date.getUTCHours() + ':' + date.getUTCMinutes() + ':' + date.getUTCSeconds();
         $('.item_data img').attr('src', photo.user.profile_picture);
         $('.item_data p strong').html(photo.user.username);
-        $('.item_data span.date').html(photo.created_time);
+        $('.item_data span.date').html(formatedDate);
         $('.item_data a').attr('href', photo.link);
         $('.content.instagram').html('<img src="' + photo.images.low_resolution.url + '" />');
         $('#content').show();
@@ -68,7 +71,7 @@
 <body>
 
 <header id="top_bar">
-  <h1>Madrid instagram activity <span></span></h1>
+<h1>Madrid instagr.am activity <span></span></h1>
 </header>
 
 <div class="popover" id="content" style="display:none">
