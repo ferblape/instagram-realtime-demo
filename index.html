@@ -25,7 +25,7 @@
         photos.push(photo.link);
         loadInfoWindow(photo);
         setupMarker(photo);
-        $('h1 span').html(photos.length + ' ' + (photos.length == 1 ? 'photo' : 'photos'));
+        $('h1 span').html('(' + photos.length + ' ' + (photos.length == 1 ? 'photo' : 'photos') + ')');
       });
 
       function setupMarker(photo){
@@ -71,7 +71,7 @@
 <body>
 
 <header id="top_bar">
-<h1>Madrid instagr.am activity <span></span></h1>
+  <h1>Madrid instagr.am activity <span></span></h1>
 </header>
 
 <div class="popover" id="content" style="display:none">
@@ -80,7 +80,7 @@
       <img src="" alt="" class="avatar">
       <p>
         <strong></strong><br>
-        <span class="date"></span> · <a href="#" target="blank">instagram</a>
+        <span class="date"></span> · <a href="#" target="blank">instagram permalink</a>
       </p>
     </div>
   </div>
@@ -89,6 +89,10 @@
 
 <div id="outer_map_container">
   <div id="map_container"></div>
+</div>
+
+<div class="progress_bar">
+  <a href="https://github.com/ferblape/instagram-realtime-demo" target="blank">Fork me on Github</a>
 </div>
 
 </body></html>
