@@ -35,9 +35,9 @@
         $('.item_data a').attr('href', photo.link);
         $('.content.instagram').html('<img src="' + photo.images.low_resolution.url + '" />');
         $('#content').show();
-        var position = new google.maps.LatLng(photo.location.latitude, photo.location.longitude);
-        map.setCenter(position);
         if(createMarker){
+          var position = new google.maps.LatLng(photo.location.latitude, photo.location.longitude);
+          map.setCenter(position);
           var marker = new google.maps.Marker({ position:position,map:map,animation:google.maps.Animation.DROP,html:photo});
           google.maps.event.addListener(marker, "click", function () {
             loadInfoWindow(this.html, false);    
