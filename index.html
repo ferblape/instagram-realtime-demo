@@ -29,7 +29,6 @@
         });
 
       function loadInfoWindow(photo, marker){
-      console.log(photo);
         $('.item_data img').attr('src', photo.user.profile_picture);
         $('.item_data p strong').html(photo.user.username);
         $('.item_data span.date').html(photo.created_time);
@@ -37,8 +36,12 @@
         $('.content.instagram').html('<img src="' + photo.images.low_resolution.url + '" />');
         $('#content').show();
         var position = new google.maps.LatLng(photo.location.latitude, photo.location.longitude);
-        new google.maps.Marker({ position:position,map:map,draggable:false});
+        var marker = new google.maps.Marker({ position:position,map:map,animation:google.maps.Animation.DROP,html:photo});
         map.setCenter(position);
+
+        google.maps.event.addListener(marker, "click", function () {
+          loadInfoWindow(this.html);    
+        });
       }
 
       var mapOptions = {
