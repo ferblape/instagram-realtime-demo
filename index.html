@@ -25,10 +25,10 @@
       socket.on('photo', function (raw) {
         var photo = JSON.parse(raw)['data'][0];
         photos.push(photo);
-        loadInfoWindow(photo);
+        loadInfoWindow(photo,true);
         });
 
-      function loadInfoWindow(photo, marker){
+      function loadInfoWindow(photo, createMarker){
         $('.item_data img').attr('src', photo.user.profile_picture);
         $('.item_data p strong').html(photo.user.username);
         $('.item_data span.date').html(photo.created_time);
@@ -36,12 +36,13 @@
         $('.content.instagram').html('<img src="' + photo.images.low_resolution.url + '" />');
         $('#content').show();
         var position = new google.maps.LatLng(photo.location.latitude, photo.location.longitude);
-        var marker = new google.maps.Marker({ position:position,map:map,animation:google.maps.Animation.DROP,html:photo});
         map.setCenter(position);
-
-        google.maps.event.addListener(marker, "click", function () {
-          loadInfoWindow(this.html);    
-        });
+        if(createMarker){
+          var marker = new google.maps.Marker({ position:position,map:map,animation:google.maps.Animation.DROP,html:photo});
+          google.maps.event.addListener(marker, "click", function () {
+            loadInfoWindow(this.html, false);    
+          });
+        }
       }
 
       var mapOptions = {
